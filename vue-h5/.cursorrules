@@ -1,0 +1,25 @@
+# Cursor Rules (Repo-wide)
+#
+# Goal: Keep changes minimal, consistent, and buildable in this Vue3 + TS + TSX + Vite + Vant4 H5 project.
+#
+# Must-follow:
+# - Indentation: 2 spaces.
+# - Prefer single quotes in TS/TSX (keep existing style; avoid unrelated reformat).
+# - Use `@` alias for imports from `src/`.
+# - Vue SFC uses `<script setup lang="ts">`.
+# - TSX components in `src/components/` and prefer explicit types for props/emits.
+# - Do NOT edit `dist/` or `node_modules/`.
+# - If `auto-imports.d.ts` changes, commit it.
+# - Avoid adding new dependencies; if needed, ask first.
+# - Network access may be restricted; do not assume installs work.
+#
+# Vant:
+# - Prefer auto-registered components in SFC templates.
+# - In TSX, import Vant components explicitly when needed.
+#
+# Definition of done:
+# - `pnpm build` passes (includes `vue-tsc`).
+#
+# Reference:
+# - docs/AI_CODING_GUIDE.md
+

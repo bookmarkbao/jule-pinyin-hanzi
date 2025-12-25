@@ -1,5 +1,7 @@
 # Repository Guidelines
 
+更多面向 AI/编辑器（Claude/Cursor/Codex/Copilot/VSCode）的协作规范与提示词模板见：`docs/AI_CODING_GUIDE.md`。
+
 ## Project Structure
 
 - `src/`: Application source code (Vue 3 + TypeScript).
