@@ -15,14 +15,7 @@ declare module 'vue' {
     TianZiGeCell: typeof import('./src/components/TianZiGeCell.vue')['default']
     TianZiGeGrid: typeof import('./src/components/TianZiGeGrid.vue')['default']
     TianZiGeWriter: typeof import('./src/components/TianZiGeWriter.vue')['default']
-    VanActionBar: typeof import('vant/es')['ActionBar']
-    VanActionBarIcon: typeof import('vant/es')['ActionBarIcon']
     VanButton: typeof import('vant/es')['Button']
-    VanField: typeof import('vant/es')['Field']
-    VanFloatingBubble: typeof import('vant/es')['FloatingBubble']
-    VanIcon: typeof import('vant/es')['Icon']
-    VanPopup: typeof import('vant/es')['Popup']
-    VanShareSheet: typeof import('vant/es')['ShareSheet']
   }
 }
 
@@ -31,12 +24,5 @@ declare global {
   const TianZiGeCell: typeof import('./src/components/TianZiGeCell.vue')['default']
   const TianZiGeGrid: typeof import('./src/components/TianZiGeGrid.vue')['default']
   const TianZiGeWriter: typeof import('./src/components/TianZiGeWriter.vue')['default']
-  const VanActionBar: typeof import('vant/es')['ActionBar']
-  const VanActionBarIcon: typeof import('vant/es')['ActionBarIcon']
   const VanButton: typeof import('vant/es')['Button']
-  const VanField: typeof import('vant/es')['Field']
-  const VanFloatingBubble: typeof import('vant/es')['FloatingBubble']
-  const VanIcon: typeof import('vant/es')['Icon']
-  const VanPopup: typeof import('vant/es')['Popup']
-  const VanShareSheet: typeof import('vant/es')['ShareSheet']
 }
