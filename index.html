@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <title>田字格练字+拼音</title>
+
+  <style>
+    :root{
+      --cell: 64px;
+      --gap: 14px;
+      --pinyin: 14px;
+      --hanzi: 36px;
+      --grid: #d9d9d9;
+      --grid-strong: #bfbfbf;
+    }
+
+    @page { size: A4; margin: 14mm; }
+
+    body{
+      margin:0;
+      font-family:"Noto Sans SC","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+      background:#fff;
+    }
+
+    .page{
+      padding:14mm;
+    }
+
+    .title{
+      font-size:18px;
+      font-weight:700;
+      margin:0 0 14px 0;
+    }
+
+    /* 🔑 一行 5 列，仅做布局，不参与逻辑 */
+    .line{
+      display:grid;
+      grid-template-columns: repeat(5, var(--cell));
+      gap: var(--gap);
+      margin-bottom: 18px; /* 行间距 */
+    }
+
+    .item{
+      width:var(--cell);
+    }
+
+    .pinyin{
+      text-align:center;
+      font-size:var(--pinyin);
+      margin-bottom:6px;
+      line-height:1.2;
+    }
+
+    .tianzige{
+      width:var(--cell);
+      height:var(--cell);
+      border:1px solid var(--grid-strong);
+      display:grid;
+      place-items:center;
+      background:
+        linear-gradient(to bottom,
+          transparent calc(50% - .5px),
+          var(--grid) calc(50% - .5px),
+          var(--grid) calc(50% + .5px),
+          transparent calc(50% + .5px)),
+        linear-gradient(to right,
+          transparent calc(50% - .5px),
+          var(--grid) calc(50% - .5px),
+          var(--grid) calc(50% + .5px),
+          transparent calc(50% + .5px)),
+        linear-gradient(45deg,
+          transparent calc(50% - .5px),
+          var(--grid) calc(50% - .5px),
+          var(--grid) calc(50% + .5px),
+          transparent calc(50% + .5px)),
+        linear-gradient(-45deg,
+          transparent calc(50% - .5px),
+          var(--grid) calc(50% - .5px),
+          var(--grid) calc(50% + .5px),
+          transparent calc(50% + .5px));
+    }
+
+    .hanzi{
+      font-size:var(--hanzi);
+      font-weight:600;
+      line-height:1;
+    }
+  </style>
+</head>
+
+<body>
+<div class="page">
+  <h1 class="title">田字格练字+拼音</h1>
+  <div id="app"></div>
+</div>
+
+<script>
+/**
+ * DATA 结构说明：
+ * - DATA = [ lesson[], lesson[] ]
+ * - lesson = [ line, line ]
+ * - line = { meta:{}, items:[{p,h},...] }
+ * - ❗ items 就是一整行，几个字就渲染几个
+ */
+
+const DATA = [
+
+  /* 第一单元 · 第一课 · 第一课时（横竖） */
+  [
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:1, lessonTitle:"第一课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第一课 / 第一课时",
+        category:"横竖"
+      },
+      items:[
+        {p:"yī",h:"一"},
+        {p:"èr",h:"二"},
+        {p:"gōng",h:"工"},
+        {p:"shí",h:"十"},
+        {p:"gān",h:"干"}
+      ]
+    },
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:1, lessonTitle:"第一课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第一课 / 第一课时",
+        category:"横竖"
+      },
+      items:[
+        {p:"sān",h:"三"},
+        {p:"wáng",h:"王"},
+        {p:"tǔ",h:"土"},
+        {p:"shàng",h:"上"},
+        {p:"fēng",h:"丰"}
+      ]
+    }
+  ],
+
+  /* 第一单元 · 第二课 · 第一课时（撇捺） */
+  [
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:2, lessonTitle:"第二课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第二课 / 第一课时",
+        category:"撇捺"
+      },
+      items:[
+        {p:"chǎng",h:"厂"},
+        {p:"kāi",h:"开"},
+        {p:"wǔ",h:"午"},
+        {p:"niú",h:"牛"},
+        {p:"hé",h:"禾"}
+      ]
+    },
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:2, lessonTitle:"第二课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第二课 / 第一课时",
+        category:"撇捺"
+      },
+      items:[
+        {p:"rén",h:"人"},
+        {p:"dà",h:"大"},
+        {p:"mù",h:"木"},
+        {p:"běn",h:"本"},
+        {p:"tiān",h:"天"}
+      ]
+    }
+  ],
+
+  /* 第一单元 · 第三课 · 第一课时（点提） */
+  [
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:3, lessonTitle:"第三课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第三课 / 第一课时",
+        category:"点提"
+      },
+      items:[
+        {p:"liù",h:"六"},
+        {p:"lì",h:"立"},
+        {p:"zhǔ",h:"主"},
+        {p:"wén",h:"文"},
+        {p:"guǎng",h:"广"}
+      ]
+    },
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:3, lessonTitle:"第三课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第三课 / 第一课时",
+        category:"点提"
+      },
+      items:[
+        {p:"tóu",h:"头"},
+        {p:"píng",h:"平"},
+        {p:"bàn",h:"半"},
+        {p:"lán",h:"兰"},
+        {p:"lái",h:"来"}
+      ]
+    }
+  ],
+
+  /* 第一单元 · 第四课 · 第一课时（口字旁结构） */
+  [
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:4, lessonTitle:"第四课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第四课 / 第一课时",
+        category:"口字结构"
+      },
+      items:[
+        {p:"kǒu",h:"口"},
+        {p:"wǔ",h:"五"},
+        {p:"yòu",h:"右"},
+        {p:"zhōng",h:"中"},
+        {p:"bèi",h:"贝"}
+      ]
+    },
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:4, lessonTitle:"第四课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第四课 / 第一课时",
+        category:"口字结构"
+      },
+      items:[
+        {p:"chǐ",h:"尺"},
+        {p:"shī",h:"尸"},
+        {p:"jiàn",h:"见"},
+        {p:"qiě",h:"且"},
+        {p:"jīng",h:"京"}
+      ]
+    }
+  ],
+
+  /* 第一单元 · 第五课 · 第一课时（刀力方） */
+  [
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:5, lessonTitle:"第五课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第五课 / 第一课时",
+        category:"横折"
+      },
+      items:[
+        {p:"dāo",h:"刀"},
+        {p:"lì",h:"力"},
+        {p:"fāng",h:"方"},
+        {p:"jīn",h:"巾"},
+        {p:"yuè",h:"月"}
+      ]
+    },
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:5, lessonTitle:"第五课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第五课 / 第一课时",
+        category:"横折"
+      },
+      items:[
+        {p:"mén",h:"门"},
+        {p:"sháo",h:"勺"},
+        {p:"bái",h:"白"},
+        {p:"tián",h:"田"},
+        {p:"gāng",h:"冈"}
+      ]
+    }
+  ],
+
+  /* 第一单元 · 第六课 · 第一课时（上下结构） */
+  [
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:6, lessonTitle:"第六课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第六课 / 第一课时",
+        category:"上下结构"
+      },
+      items:[
+        {p:"dīng",h:"丁"},
+        {p:"xiǎo",h:"小"},
+        {p:"cùn",h:"寸"},
+        {p:"yú",h:"于"},
+        {p:"kě",h:"可"}
+      ]
+    },
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:6, lessonTitle:"第六课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第六课 / 第一课时",
+        category:"上下结构"
+      },
+      items:[
+        {p:"xí",h:"习"},
+        {p:"běi",h:"北"},
+        {p:"sháo",h:"勺"},
+        {p:"yǐ",h:"以"},
+        {p:"mín",h:"民"}
+      ]
+    }
+  ],
+
+  /* 第一单元 · 第七课 · 第一课时（独体字） */
+  [
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:7, lessonTitle:"第七课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第七课 / 第一课时",
+        category:"独体字"
+      },
+      items:[
+        {p:"ér",h:"儿"},
+        {p:"qī",h:"七"},
+        {p:"yuán",h:"元"},
+        {p:"máo",h:"毛"},
+        {p:"yě",h:"也"}
+      ]
+    },
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:7, lessonTitle:"第七课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第七课 / 第一课时",
+        category:"独体字"
+      },
+      items:[
+        {p:"wú",h:"无"},
+        {p:"xiōng",h:"兄"},
+        {p:"diàn",h:"电"},
+        {p:"bā",h:"巴"},
+        {p:"sì",h:"四"}
+      ]
+    }
+  ],
+    /* 第一单元 · 第八课 · 第一课时（撇折 / 横折） */
+  [
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:8, lessonTitle:"第八课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第八课 / 第一课时",
+        category:"撇折"
+      },
+      items:[
+        {p:"yún",h:"云"},
+        {p:"qù",h:"去"},
+        {p:"me",h:"么"},
+        {p:"chē",h:"车"},
+        {p:"dōng",h:"东"}
+      ]
+    },
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:8, lessonTitle:"第八课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第八课 / 第一课时",
+        category:"撇折"
+      },
+      items:[
+        {p:"shuǐ",h:"水"},
+        {p:"xī",h:"夕"},
+        {p:"yòu",h:"又"},
+        {p:"jiǔ",h:"久"},
+        {p:"yǒu",h:"友"}
+      ]
+    }
+  ],
+
+  /* 第一单元 · 第九课 · 第一课时（独体字 / 包围结构） */
+  [
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:9, lessonTitle:"第九课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第九课 / 第一课时",
+        category:"独体字"
+      },
+      items:[
+        {p:"shān",h:"山"},
+        {p:"yá",h:"牙"},
+        {p:"yǐ",h:"乙"},
+        {p:"lè",h:"乐"},
+        {p:"qū",h:"区"}
+      ]
+    },
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:9, lessonTitle:"第九课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第九课 / 第一课时",
+        category:"独体字"
+      },
+      items:[
+        {p:"niǎo",h:"鸟"},
+        {p:"wū",h:"乌"},
+        {p:"xiě",h:"写"},
+        {p:"yǔ",h:"与"},
+        {p:"mǎ",h:"马"}
+      ]
+    }
+  ],
+
+  /* 第一单元 · 第十课 · 第一课时（包围结构 / 综合） */
+  [
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:10, lessonTitle:"第十课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第十课 / 第一课时",
+        category:"包围结构"
+      },
+      items:[
+        {p:"jiǔ",h:"九"},
+        {p:"jǐ",h:"几"},
+        {p:"fán",h:"凡"},
+        {p:"wán",h:"丸"},
+        {p:"kàng",h:"亢"}
+      ]
+    },
+    {
+      meta:{
+        unit:1, unitTitle:"一单元",
+        lesson:10, lessonTitle:"第十课",
+        session:1, sessionTitle:"第一课时",
+        title:"一单元 / 第十课 / 第一课时",
+        category:"包围结构"
+      },
+      items:[
+        {p:"le",h:"了"},
+        {p:"zǐ",h:"子"},
+        {p:"pí",h:"皮"},
+        {p:"mǎi",h:"买"},
+        {p:"jiā",h:"家"}
+      ]
+    }
+  ]
+];
+
+
+const app = document.getElementById("app");
+
+DATA.forEach(lesson=>{
+  lesson.forEach(line=>{
+    const lineEl = document.createElement("div");
+    lineEl.className = "line";
+
+    line.items.forEach(({p,h})=>{
+      const item = document.createElement("div");
+      item.className = "item";
+      item.innerHTML = `
+        <div class="pinyin">${p}</div>
+        <div class="tianzige"><div class="hanzi">${h}</div></div>
+      `;
+      lineEl.appendChild(item);
+    });
+
+    app.appendChild(lineEl);
+  });
+});
+</script>
+</body>
+</html>
