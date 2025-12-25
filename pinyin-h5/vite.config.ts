@@ -7,9 +7,9 @@ import Components from "unplugin-vue-components/vite";
 import { defineConfig } from "vite";
 // https://vite.dev/config/
 export default defineConfig({
-  base: "/peiyin",
+  base: "/pinyin",
   build: {
-    outDir: 'dist/peiyin',
+    outDir: 'dist/pinyin',
     sourcemap: false,
   },
     

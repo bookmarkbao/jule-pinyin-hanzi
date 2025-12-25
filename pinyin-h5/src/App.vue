@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import TianZiGeGrid from '@/components/TianZiGeGrid.vue'
 import TianZiGeWriter from '@/components/TianZiGeWriter.vue'
-import { computed, ref } from 'vue'
+import { useWxShare } from '@/composables/useWxShare'
+import { computed, onMounted, onUnmounted, ref } from 'vue'
 
 const demoLines: Array<string[]> = [
   // 第一课
@@ -48,6 +49,29 @@ const demoLines: Array<string[]> = [
 const current = ref(demoLines[0]?.[0] || '')
 const flatItems = computed(() => demoLines.flat().map((h) => ({ h })))
 const flatHanzi = computed(() => demoLines.flat())
+
+const { initWxShare, refreshWxShare } = useWxShare({
+  debug: import.meta.env.DEV,
+  signApiUrl: import.meta.env.VITE_WX_SHARE_SIGN_API,
+})
+
+const refreshWxShareOnNav = () => refreshWxShare()
+
+onMounted(() => {
+  initWxShare({
+    title: '幼小衔接汉字练习：田字格描红 + 发音',
+    desc: '幼儿园/小学生专用汉字学习：田字格书写练习、汉字发音朗读，每天练一点，轻松打基础。',
+    imgUrl: 'https://oss-cdn.tsdanci.com/tsdc-web/1751053814688.png',
+  })
+
+  window.addEventListener('hashchange', refreshWxShareOnNav)
+  window.addEventListener('popstate', refreshWxShareOnNav)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('hashchange', refreshWxShareOnNav)
+  window.removeEventListener('popstate', refreshWxShareOnNav)
+})
 </script>
 
 <template>

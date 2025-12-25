@@ -524,6 +524,13 @@
   resolved "https://registry.npmmirror.com/@rollup/rollup-win32-x64-msvc/-/rollup-win32-x64-msvc-4.54.0.tgz#beacb356412eef5dc0164e9edfee51c563732054"
   integrity sha512-hYT5d3YNdSh3mbCU1gwQyPgQd3T2ne0A3KG8KSBdav5TiBg6eInVmV+TeR5uHufiIgSFg0XsOWGW5/RhNcSvPg==
 
+"@tsdanci/wx-share@^1.0.5":
+  version "1.0.5"
+  resolved "https://registry.npmmirror.com/@tsdanci/wx-share/-/wx-share-1.0.5.tgz#8e2612faaf5feced96474c5bd60675654a1a68ec"
+  integrity sha512-LlLbBcpJtEVhzDSW97eIqXw6soQtVTJvh/Ey+Ls9HipVVWHhILmWpsRJIq/rBM72S0vWyShAHbOMEGyaGh/JWQ==
+  dependencies:
+    weixin-js-sdk "^1.6.5"
+
 "@types/estree@1.0.8", "@types/estree@^1.0.0":
   version "1.0.8"
   resolved "https://registry.npmmirror.com/@types/estree/-/estree-1.0.8.tgz#958b91c991b1867ced318bedea0e215ee050726e"
@@ -1804,6 +1811,11 @@ webpack-virtual-modules@^0.6.2:
   version "0.6.2"
   resolved "https://registry.npmmirror.com/webpack-virtual-modules/-/webpack-virtual-modules-0.6.2.tgz#057faa9065c8acf48f24cb57ac0e77739ab9a7e8"
   integrity sha512-66/V2i5hQanC51vBQKPH4aI8NMAcBW59FVBs+rC7eGHupMyfn34q7rZIE+ETlJ+XTevqfUhVVBgSUNSW2flEUQ==
+
+weixin-js-sdk@^1.6.5:
+  version "1.6.5"
+  resolved "https://registry.npmmirror.com/weixin-js-sdk/-/weixin-js-sdk-1.6.5.tgz#01fe5220b91dbfe089fc0730d061be0e68271e6a"
+  integrity sha512-Gph1WAWB2YN/lMOFB/ymb+hbU/wYazzJgu6PMMktCy9cSCeW5wA6Zwt0dpahJbJ+RJEwtTv2x9iIu0U4enuVSQ==
 
 which@^2.0.1:
   version "2.0.2"
