@@ -10,6 +10,9 @@
   },
   "dependencies": {
     "@vant/auto-import-resolver": "^1.3.0",
+    "cnchar": "^3.2.6",
+    "cnchar-draw": "^3.2.6",
+    "cnchar-voice": "^3.2.6",
     "vant": "^4.9.22",
     "vue": "^3.5.24"
   },

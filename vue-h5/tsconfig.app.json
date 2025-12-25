@@ -5,6 +5,10 @@
     "types": ["vite/client"],
     "jsx": "preserve",
     "jsxImportSource": "vue",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
 
     /* Linting */
     "strict": true,
